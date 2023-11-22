@@ -1,0 +1,35 @@
+# Viviana Velázquez 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigo-dep
+spec:
+  replicas: 3 # Replicas o instancias de la aplicación
+  selector: # Indica como encuentra los pods
+    matchLabels:
+      app: apigo
+  template: # Plantilla para crear nuevos pods
+    metadata:
+      labels:
+        app: apigo
+    spec:
+      containers:
+        - name: apigo
+          image: 1924viviana0524/vvelazquez:latest # Imagen tomada desde docker
+          env:
+            - name: DATABASE_URL
+              value: postgres://viviana:viviana@postgres-service:5432/icecream?sslmode=disable # usuario:contraseña@servicio:puerto/BD
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigo-service
+spec:
+  selector:
+    app: apigo
+  ports: # Puertos expuestos
+    - protocol: TCP
+      port: 80
+      targetPort: 80

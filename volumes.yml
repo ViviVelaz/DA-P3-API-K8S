@@ -1,0 +1,23 @@
+#Viviana Velázquez
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Permite que el volumen sea montado en modo lectura/escritura por un único nodo a la vez
+  resources:
+    requests:
+      storage: 2Gi # Solicita al menos 2 gigabytes de almacenamiento persistente
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/postgres-data #  Especifica el camino en el sistema de archivos del nodo donde se almacenará el volumen

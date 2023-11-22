@@ -1,0 +1,17 @@
+# Viviana Velázquez 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+spec:
+  rules:
+    - host: api.vvelazquez.com # Nombre de host
+      http:
+        paths:
+          - path: /icecreams # Prefijo
+            pathType: Prefix 
+            backend:
+              service:
+                name: apigo-service # Servicio que consume o hace referencia
+                port:
+                  number: 80
